@@ -110,7 +110,7 @@ def perspect_transform(img, src, dst):
 # Apply the above functions in succession and update the Rover state accordingly
 def perception_step(Rover):
     # Perform perception steps to update Rover()
-    # TODO: 
+
     # NOTE: camera image is coming to you in Rover.img
     # 1) Define source and destination points for perspective transform
     # 2) Apply perspective transform
