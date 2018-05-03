@@ -111,27 +111,6 @@ def perspect_transform(img, src, dst):
 def perception_step(Rover):
     # Perform perception steps to update Rover()
 
-    # NOTE: camera image is coming to you in Rover.img
-    # 1) Define source and destination points for perspective transform
-    # 2) Apply perspective transform
-    # 3) Apply color threshold to identify navigable terrain/obstacles/rock samples
-    # 4) Update Rover.vision_image (this will be displayed on left side of screen)
-    # Example: Rover.vision_image[:,:,0] = obstacle color-thresholded binary image
-    #          Rover.vision_image[:,:,1] = rock_sample color-thresholded binary image
-    #          Rover.vision_image[:,:,2] = navigable terrain color-thresholded binary image
-
-    # 5) Convert map image pixel values to rover-centric coords
-    # 6) Convert rover-centric pixel values to world coordinates
-    # 7) Update Rover worldmap (to be displayed on right side of screen)
-    # Example: Rover.worldmap[obstacle_y_world, obstacle_x_world, 0] += 1
-    #          Rover.worldmap[rock_y_world, rock_x_world, 1] += 1
-    #          Rover.worldmap[navigable_y_world, navigable_x_world, 2] += 1
-
-    # 8) Convert rover-centric pixel positions to polar coordinates
-    # Update Rover pixel distances and angles
-    # Rover.nav_dists = rover_centric_pixel_distances
-    # Rover.nav_angles = rover_centric_angles
-
     ###########################################################################
     # 0. Extract image
     ###########################################################################
@@ -204,9 +183,11 @@ def perception_step(Rover):
     ###########################################################################
     # 7. Update Rover worldmap
     ###########################################################################
-    Rover.worldmap[y_world_obstacle, x_world_obstacle, 0] += 1
-    Rover.worldmap[y_world_sample, x_world_sample, 1] += 1
-    Rover.worldmap[y_world_navigable, x_world_navigable, 2] += 1
+    # Update worldmap if rover is stable - without too much roll or pitch
+    if abs(Rover.pitch) < 5 and abs(Rover.roll) < 5:
+        Rover.worldmap[y_world_obstacle, x_world_obstacle, 0] += 1
+        Rover.worldmap[y_world_sample, x_world_sample, 1] += 1
+        Rover.worldmap[y_world_navigable, x_world_navigable, 2] += 1
 
     ###########################################################################
     # 8. Convert rover-centric pixel positions to polar coordinates

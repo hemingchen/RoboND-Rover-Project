@@ -10,8 +10,9 @@ import eventlet.wsgi
 import matplotlib.image as mpimg
 import numpy as np
 import socketio
-from decision import decision_step, MAX_STUCK_EFFORTS
 from flask import Flask
+
+from decision import decision_step, MAX_STUCK_EFFORTS
 # Import functions for perception and decision making
 from perception import perception_step, RoverMode
 from supporting_functions import update_rover, create_output_images
@@ -35,7 +36,7 @@ ground_truth_3d = np.dstack((ground_truth * 0, ground_truth * 255, ground_truth 
 class RoverState():
     def __init__(self):
         self.start_time = None  # To record the start time of navigation
-        self.total_time = None  # To record total duration of naviagation
+        self.total_time = None  # To record total duration of navigation
         self.img = None  # Current camera image
         self.pos = None  # Current position (x, y)
         self.yaw = None  # Current yaw angle
